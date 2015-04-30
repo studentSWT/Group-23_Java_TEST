@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="6371" started-at="2015-04-30T20:51:35Z" finished-at="2015-04-30T20:51:42Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="6371" started-at="2015-04-30T20:51:35Z" finished-at="2015-04-30T20:51:42Z">
+      <class name="com.example.tests.GroupModificationTests">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.example.tests.GroupModificationTests@69dbb4d1]" name="setUp" is-config="true" duration-ms="4380" started-at="2015-04-30T23:51:35Z" finished-at="2015-04-30T23:51:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="modifySomeGroup()[pri:0, instance:com.example.tests.GroupModificationTests@69dbb4d1]" name="modifySomeGroup" duration-ms="1720" started-at="2015-04-30T23:51:40Z" finished-at="2015-04-30T23:51:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- modifySomeGroup -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.example.tests.GroupModificationTests@69dbb4d1]" name="tearDown" is-config="true" duration-ms="259" started-at="2015-04-30T23:51:41Z" finished-at="2015-04-30T23:51:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.example.tests.GroupModificationTests -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
