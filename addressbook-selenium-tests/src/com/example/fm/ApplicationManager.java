@@ -18,8 +18,7 @@ public class ApplicationManager {
 	public ApplicationManager() {
 	    driver = new FirefoxDriver();
 	    baseUrl = "http://localhost/";
-	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	    
+	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);	    
 	}
 	
 	public void stop() {

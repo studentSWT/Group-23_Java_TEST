@@ -30,27 +30,31 @@ public class ContactHelper extends HelperBase {
 	    type(By.name("address2"), contact.address2);
 	    type(By.name("phone2"), contact.phoneHome2);
 	}
-
-	private void selectContactByIndex(int index, String alt) {
-		index = index + 1;
-		click(By.xpath("//tr[" + index + "]/td/a/img[@alt='" + alt + "']"));
-	}
-	
-	public void initContactModification(int index, String alt) {
-		selectContactByIndex(index, alt);
-	}
 	
 	public void initNewContactCreation() {
 	    click(By.linkText("add new"));
 	}
 
-	public void submitContactModification(String alt) {
-		click(By.xpath("//input[@value='" + alt + "']"));
-	}
-
 	public void initContactModify() {
 		click(By.name("modifiy"));		
 	}
+
+	public void initContactModificationViaEdit(int index) {
+		click(By.xpath("//tr[" + (index + 1) + "]/td/a/img[@alt='Edit']"));
+	}
+
+	public void initContactModificationViaDetails(int index) {
+		click(By.xpath("//tr[" + (index + 1) + "]/td/a/img[@alt='Details']"));
+	}
+	
+	public void submitContactModification() {
+		click(By.xpath("//input[@value='Update']"));
+	}
+	
+	public void submitContactRemoving() {
+		click(By.xpath("//input[@value='Delete']"));
+	}
+
 	public void gotoHomePage() {
 	    click(By.linkText("home"));
 	}

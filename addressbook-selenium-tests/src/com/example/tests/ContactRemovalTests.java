@@ -6,17 +6,17 @@ public class ContactRemovalTests extends TestBase {
 	@Test
 	public void deleteSomeGroupEdit() {
 		app.getNavigationHelper().openMainPage();
-		app.getContactHelper().initContactModification(7,"Edit");
-		app.getContactHelper().submitContactModification("Delete");
+		app.getContactHelper().initContactModificationViaEdit(7);
+		app.getContactHelper().submitContactRemoving();
 		app.getContactHelper().gotoHomePage();
 	}
 	
 	@Test
 	public void deleteSomeGroupModify() {
 		app.getNavigationHelper().openMainPage();
-		app.getContactHelper().initContactModification(1,"Details");
+		app.getContactHelper().initContactModificationViaDetails(1);
 		app.getContactHelper().initContactModify();
-		app.getContactHelper().submitContactModification("Delete");
+		app.getContactHelper().submitContactRemoving();
 		app.getContactHelper().gotoHomePage();
 	}	
 }
