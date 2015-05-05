@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 
 public class ContactRemovalTests extends TestBase {
 	@Test
-	public void deleteSomeGroupEdit() {
+	public void deleteSomeContactEdit() {
 		app.getNavigationHelper().openMainPage();
 		app.getContactHelper().initContactModificationViaEdit(7);
 		app.getContactHelper().submitContactRemoving();
@@ -12,7 +12,7 @@ public class ContactRemovalTests extends TestBase {
 	}
 	
 	@Test
-	public void deleteSomeGroupModify() {
+	public void deleteSomeContactModify() {
 		app.getNavigationHelper().openMainPage();
 		app.getContactHelper().initContactModificationViaDetails(1);
 		app.getContactHelper().initContactModify();
