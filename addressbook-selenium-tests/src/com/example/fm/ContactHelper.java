@@ -1,8 +1,13 @@
 package com.example.fm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.example.tests.ContactData;
+import com.example.tests.GroupData;
 
 public class ContactHelper extends HelperBase {
 
@@ -23,8 +28,8 @@ public class ContactHelper extends HelperBase {
 	    type(By.name("work"), contact.phoneWork);
 	    type(By.name("email"), contact.email1);
 	    type(By.name("email2"), contact.email2);
-	    selectByText(By.name("birthday"), contact.birthDay);
-	    selectByText(By.name("birthmonth"), contact.birthMonth);
+	    selectByText(By.name("bday"), contact.birthDay);
+	    selectByText(By.name("bmonth"), contact.birthMonth);
 	    type(By.name("byear"), contact.birthYear);
 	    // selectByText(By.name("new_group"), "group 1");
 	    type(By.name("address2"), contact.address2);
@@ -57,5 +62,31 @@ public class ContactHelper extends HelperBase {
 
 	public void gotoHomePage() {
 	    click(By.linkText("home"));
+	}
+	
+	public List<ContactData> getContacts() {
+		 List<ContactData> contacts = new ArrayList<ContactData>();
+	     // List<WebElement>  rows = driver.findElements(By.name("entry"));
+		
+	     // List<WebElement> rows = driver.findElements(By.xpath("//tr[@name='entry']"));		
+		 // for (WebElement row : rows) 
+			 
+		 Integer rowsLength = driver.findElements(By.xpath("//tr")).size();
+		 
+		 for (int i = 2; i < rowsLength; i++) {
+			
+			ContactData contact = new ContactData();
+			contact.firstName = driver.findElement(By.xpath("//tr[" + i + "]/td[3]")).getText();
+			contact.lastName = driver.findElement(By.xpath("//tr[" + i + "]/td[2]")).getText();
+			contact.email1 = driver.findElement(By.xpath("//tr[" + i + "]/td[4]")).getText();
+			contact.phoneHome =  driver.findElement(By.xpath("//tr[" + i + "]/td[5]")).getText();
+			
+			String emails = driver.findElement(By.xpath("//tr[" + i + "]/td[1]/input")).getAttribute("accept");
+			// String emailsssss = driver.findElement(By.name("selected[]")).getAttribute("accept");
+			contact.email2 = emails.substring(emails.indexOf(";") + 1,emails.length());
+						
+			contacts.add(contact);			
+		}
+		return contacts;
 	}
 }
