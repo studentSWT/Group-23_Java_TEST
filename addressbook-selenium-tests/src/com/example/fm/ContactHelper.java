@@ -66,27 +66,18 @@ public class ContactHelper extends HelperBase {
 	
 	public List<ContactData> getContacts() {
 		 List<ContactData> contacts = new ArrayList<ContactData>();
-	     // List<WebElement>  rows = driver.findElements(By.name("entry"));
-		
-	     // List<WebElement> rows = driver.findElements(By.xpath("//tr[@name='entry']"));		
-		 // for (WebElement row : rows) 
-			 
-		 Integer rowsLength = driver.findElements(By.xpath("//tr")).size();
-		 
-		 for (int i = 2; i < rowsLength; i++) {
-			
-			ContactData contact = new ContactData();
-			contact.firstName = driver.findElement(By.xpath("//tr[" + i + "]/td[3]")).getText();
-			contact.lastName = driver.findElement(By.xpath("//tr[" + i + "]/td[2]")).getText();
-			contact.email1 = driver.findElement(By.xpath("//tr[" + i + "]/td[4]")).getText();
-			contact.phoneHome =  driver.findElement(By.xpath("//tr[" + i + "]/td[5]")).getText();
-			
-			String emails = driver.findElement(By.xpath("//tr[" + i + "]/td[1]/input")).getAttribute("accept");
-			// String emailsssss = driver.findElement(By.name("selected[]")).getAttribute("accept");
-			contact.email2 = emails.substring(emails.indexOf(";") + 1,emails.length());
-						
-			contacts.add(contact);			
-		}
+	     List<WebElement>  rows = driver.findElements(By.name("entry"));
+	     
+	     for (WebElement row : rows) {
+		     ContactData contact = new ContactData(); 
+		        String emails = row.findElement(By.xpath(".//td[1]/input")).getAttribute("accept");
+		        contact.firstName = row.findElement(By.xpath(".//td[2]")).getText();
+		        contact.lastName = row.findElement(By.xpath(".//td[3]")).getText();
+		        contact.email1 = row.findElement(By.xpath(".//td[4]")).getText();
+		        contact.phoneHome =  row.findElement(By.xpath(".//td[5]")).getText();
+		        contact.email2 = emails.substring(emails.indexOf(";") + 1,emails.length());
+		     contacts.add(contact);
+		 }			
 		return contacts;
 	}
 }

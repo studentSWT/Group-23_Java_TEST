@@ -21,8 +21,10 @@ public class ContactCreationTests extends TestBase{
 	// actions
 	app.getContactHelper().initNewContactCreation();
     ContactData contact = new ContactData();
-    contact.firstName = "1114qqq";
-    contact.lastName = "11113";
+    String firstName = "1114qqq";
+    String lastName = "11113";
+    contact.firstName = firstName;
+    contact.lastName = lastName;
     contact.address1 = "addr";
     contact.phoneHome = "111";
     contact.phoneMobile = "222";
@@ -42,11 +44,10 @@ public class ContactCreationTests extends TestBase{
     List<ContactData> newList = app.getContactHelper().getContacts(); 
     
     // compare states
-    // assertEquals(newList.size(), oldList.size() + 1);
-    
+    contact.firstName = lastName;
+    contact.lastName = firstName;
     oldList.add(contact);
     Collections.sort(oldList);
-    Collections.sort(newList);
     assertEquals(newList, oldList);
   }
   
@@ -60,8 +61,10 @@ public class ContactCreationTests extends TestBase{
 	// actions
 	app.getContactHelper().initNewContactCreation();
     ContactData contact = new ContactData();	
-    contact.firstName = "EmptyDate";
-    contact.lastName = "qq";
+    String firstName = "EmptyDate";
+    String lastName = "qq";
+    contact.firstName = firstName;
+    contact.lastName = lastName;
     contact.address1 = "ww";
     contact.phoneHome = "234";
     contact.phoneMobile = "345";
@@ -81,9 +84,10 @@ public class ContactCreationTests extends TestBase{
     List<ContactData> newList = app.getContactHelper().getContacts(); 
     
     // compare states
+    contact.firstName = lastName;
+    contact.lastName = firstName;
     oldList.add(contact);
     Collections.sort(oldList);
-    Collections.sort(newList);
     assertEquals(newList, oldList);
   }
 
@@ -107,7 +111,7 @@ public class ContactCreationTests extends TestBase{
     // compare states
     oldList.add(contact);
     Collections.sort(oldList);
-    Collections.sort(newList);
     assertEquals(newList, oldList);
   }
+  
 }
