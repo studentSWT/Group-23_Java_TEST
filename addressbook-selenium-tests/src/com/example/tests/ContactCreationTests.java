@@ -1,18 +1,46 @@
 package com.example.tests;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
-
-
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class ContactCreationTests extends TestBase{
+	
+  @DataProvider
+  public Iterator<Object[]> randomValidContactGenerator(){
+	  List<Object[]> list = new ArrayList<Object[]>();
 
-  @Test
-  public void testNonEmptyContactCreation() throws Exception {
+	  for (int i = 0; i < 2; i++) {
+	        ContactData contact = new ContactData();
+	        contact.firstName = generateRandomString();
+		    contact.lastName = generateRandomString();
+		    contact.phoneHome = generateRandomString();
+		    contact.email1 = generateRandomString();
+		    contact.email2 = generateRandomString();
+		    list.add(new Object[]{contact});
+	  }
+	  return list.iterator();
+  }
+  
+  public String generateRandomString() {
+	    Random rnd = new Random();
+	    if (rnd.nextInt(4) == 0) {
+	    	return "";
+	    } else {
+	    	return "test" + rnd.nextInt();
+	    }	  
+ }
+
+  @Test(dataProvider = "randomValidContactGenerator")
+  public void testContactCreationWithValidData(ContactData contact) throws Exception {
 	app.getNavigationHelper().openMainPage();
 	
 	// save old state
@@ -20,22 +48,6 @@ public class ContactCreationTests extends TestBase{
  
 	// actions
 	app.getContactHelper().initNewContactCreation();
-    ContactData contact = new ContactData();
-    String firstName = "1114qqq";
-    String lastName = "11113";
-    contact.firstName = firstName;
-    contact.lastName = lastName;
-    contact.address1 = "addr";
-    contact.phoneHome = "111";
-    contact.phoneMobile = "222";
-    contact.phoneWork = "333";
-    contact.email1 = "ccccc@bb.cc";
-    contact.email2 = "nnnnn1@bb.cc";
-    contact.birthDay = "10";
-    contact.birthMonth = "June";
-    contact.birthYear = "1980";
-    contact.address2 = "address3";
-    contact.phoneHome2 = "555";
 	app.getContactHelper().fillContactForm(contact);
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().gotoHomePage();
@@ -44,73 +56,13 @@ public class ContactCreationTests extends TestBase{
     List<ContactData> newList = app.getContactHelper().getContacts(); 
     
     // compare states
-    contact.firstName = lastName;
-    contact.lastName = firstName;
-    oldList.add(contact);
-    Collections.sort(oldList);
-    assertEquals(newList, oldList);
-  }
-  
-  @Test
-  public void testEmptyDateNonEmptyContactCreation() throws Exception {
-	app.getNavigationHelper().openMainPage();
-	
-	// save old state
-		List<ContactData> oldList = app.getContactHelper().getContacts();
-	 
-	// actions
-	app.getContactHelper().initNewContactCreation();
-    ContactData contact = new ContactData();	
-    String firstName = "EmptyDate";
-    String lastName = "qq";
+    String firstName = contact.lastName;
+    String lastName = contact.firstName;
     contact.firstName = firstName;
     contact.lastName = lastName;
-    contact.address1 = "ww";
-    contact.phoneHome = "234";
-    contact.phoneMobile = "345";
-    contact.phoneWork = "456";
-    contact.email1 = "hhh@yandex.ru";
-    contact.email2 = "qqq@gmail.com";
-    contact.birthDay = "-";
-    contact.birthMonth = "-";
-    contact.birthYear = "1970";
-    contact.address2 = "address3";
-    contact.phoneHome2 = "555";
-    app.getContactHelper().fillContactForm(contact);
-    app.getContactHelper().submitContactCreation();
-    app.getContactHelper().gotoHomePage();
-    
-    // save new state
-    List<ContactData> newList = app.getContactHelper().getContacts(); 
-    
-    // compare states
-    contact.firstName = lastName;
-    contact.lastName = firstName;
     oldList.add(contact);
     Collections.sort(oldList);
-    assertEquals(newList, oldList);
-  }
-
-  @Test
-  public void testEmptyContactCreation() throws Exception {
-	app.getNavigationHelper().openMainPage();
-	
-	// save old state
-		List<ContactData> oldList = app.getContactHelper().getContacts();
-	 
-	// actions
-	app.getContactHelper().initNewContactCreation();
-    ContactData contact = new ContactData("", "", "", "", "", "", "", "", "-", "-", "-", "", "");
-	app.getContactHelper().fillContactForm(contact);
-    app.getContactHelper().submitContactCreation();
-    app.getContactHelper().gotoHomePage();
-    
-    // save new state
-    List<ContactData> newList = app.getContactHelper().getContacts(); 
-    
-    // compare states
-    oldList.add(contact);
-    Collections.sort(oldList);
+    Collections.sort(newList);
     assertEquals(newList, oldList);
   }
   
