@@ -101,17 +101,17 @@ public class ContactData implements Comparable<ContactData>{
 			if (compareLastName == 0) {
 				int compareEmail1 = this.email1.toLowerCase().compareTo(other.email1.toLowerCase());
 				if (compareEmail1 == 0) {
-					//int compareEmail2 = this.email2.toLowerCase().compareTo(other.email2.toLowerCase());
-					//if (compareEmail2 == 0) {
+					int compareEmail2 = this.email2.toLowerCase().compareTo(other.email2.toLowerCase());
+					if (compareEmail2 == 0) {
 						int comparePhoneHome = this.phoneHome.toLowerCase().compareTo(other.phoneHome.toLowerCase());
 						if (comparePhoneHome == 0) {
 							return 0;
 						} else {
 							return comparePhoneHome;
 						}
-					//} else {
-					//	return compareEmail2;
-					//}
+					} else {
+						return compareEmail2;
+					}
 				} else {
 					return compareEmail1;
 				}
