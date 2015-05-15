@@ -31,7 +31,6 @@ public class ContactHelper extends HelperBase {
 	    selectByText(By.name("bday"), contact.birthDay);
 	    selectByText(By.name("bmonth"), contact.birthMonth);
 	    type(By.name("byear"), contact.birthYear);
-	    // selectByText(By.name("new_group"), "group 1");
 	    type(By.name("address2"), contact.address2);
 	    type(By.name("phone2"), contact.phoneHome2);
 	}
@@ -71,11 +70,17 @@ public class ContactHelper extends HelperBase {
 	     for (WebElement row : rows) {
 		     ContactData contact = new ContactData(); 
 		        String emails = row.findElement(By.xpath(".//td[1]/input")).getAttribute("accept");
+		        int indexStr = emails.indexOf(";");
 		        contact.firstName = row.findElement(By.xpath(".//td[2]")).getText();
 		        contact.lastName = row.findElement(By.xpath(".//td[3]")).getText();
 		        contact.email1 = row.findElement(By.xpath(".//td[4]")).getText();
-		        contact.phoneHome =  row.findElement(By.xpath(".//td[5]")).getText();
-		        contact.email2 = emails.substring(emails.indexOf(";") + 1,emails.length());
+		        //contact.phoneHome =  row.findElement(By.xpath(".//td[5]")).getText();
+		    	if (indexStr == -1) {
+		    	    contact.email2 = "";
+		    	} else {
+					contact.email2 = emails.substring(indexStr + 1,emails.length());
+				}
+		        
 		     contacts.add(contact);
 		 }			
 		return contacts;

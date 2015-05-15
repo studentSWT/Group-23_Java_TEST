@@ -9,8 +9,10 @@ import java.util.Random;
 import org.testng.annotations.Test;
 
 public class GroupModificationTests extends TestBase {
+	
 	@Test(dataProvider = "randomValidGroupGenerator")
-	public void modifySomeGrou(GroupData group) {
+	
+	public void modifySomeGroup(GroupData group) {
 		app.getNavigationHelper().openMainPage();
 	    app.getNavigationHelper().gotoGroupsPage();
 	    

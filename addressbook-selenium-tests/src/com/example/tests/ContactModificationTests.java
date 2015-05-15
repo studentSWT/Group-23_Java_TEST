@@ -4,28 +4,22 @@ import static org.testng.AssertJUnit.assertEquals;
 
 import java.util.Collections;
 import java.util.List;
-
-import org.openqa.selenium.By;
+import java.util.Random;
 import org.testng.annotations.Test;
 
 public class ContactModificationTests extends TestBase {
-	@Test
-	public void modifySomeContactEdit() {
+	
+	@Test(dataProvider = "randomValidContactGenerator")
+	public void modifySomeContactEdit(ContactData contact) {
 		app.getNavigationHelper().openMainPage();
 		
 		// save old state
 		List<ContactData> oldList = app.getContactHelper().getContacts();
-		
+		 Random rnd = new Random();
+		 int index = rnd.nextInt(oldList.size() - 1);
+		    
 		// actions
-		app.getContactHelper().initContactModificationViaEdit(1);
-	    ContactData contact = new ContactData();
-	    String firstName = "11REC333_vika4";
-	    String lastName = "REC333_kot3"; 
-	    contact.firstName = firstName;
-	    contact.lastName = lastName;
-	    contact.phoneHome =  "zzbb1230004567";
-	    contact.email1 = "111rrrr@uu.rr"; 
-        contact.email2 = "222hhh@mmmm.hhh";
+		app.getContactHelper().initContactModificationViaEdit(index + 1);
 		app.getContactHelper().fillContactForm(contact);
 	    app.getContactHelper().submitContactModification();
 	    app.getContactHelper().gotoHomePage();
@@ -34,33 +28,29 @@ public class ContactModificationTests extends TestBase {
 	    List<ContactData> newList = app.getContactHelper().getContacts(); 
 	    
 	    // compare states
-	    contact.firstName = lastName;
-	    contact.lastName = firstName;
-	    oldList.remove(0);   
+	    String lastName = contact.firstName;
+	    String firstName = contact.lastName;
+	    contact.firstName = firstName;
+	    contact.lastName = lastName;
+	    oldList.remove(index);   
 	    oldList.add(contact);
 	    Collections.sort(oldList);
 	    Collections.sort(newList);
 	    assertEquals(newList, oldList);
 	}
 	
-	@Test
-	public void modifySomeContactDetails() {
+	@Test(dataProvider = "randomValidContactGenerator")
+	public void modifySomeContactDetails(ContactData contact) {
 		app.getNavigationHelper().openMainPage();
 		
 		// save old state
 		List<ContactData> oldList = app.getContactHelper().getContacts();
-		
+		 Random rnd = new Random();
+		 int index = rnd.nextInt(oldList.size() - 1);
+		 
 		// actions
-		app.getContactHelper().initContactModificationViaDetails(2);
+		app.getContactHelper().initContactModificationViaDetails(index + 1);
 		app.getContactHelper().initContactModify();
-	    ContactData contact = new ContactData(); 
-	    String firstName = "zEC333_Modify_kot3";
-	    String lastName = "zzzz33_Modify_vika4"; 
-	    contact.firstName = firstName;
-	    contact.lastName = lastName;
-	    contact.phoneHome =  "1234567";
-	    contact.email1 = "rrrr@uu.rr"; 
-        contact.email2 = "hhh@mmmm.hhh";
 		app.getContactHelper().fillContactForm(contact);
 	    app.getContactHelper().submitContactModification();
 	    app.getContactHelper().gotoHomePage();
@@ -69,9 +59,11 @@ public class ContactModificationTests extends TestBase {
 	    List<ContactData> newList = app.getContactHelper().getContacts(); 
 	    
 	    // compare states
-	    contact.firstName = lastName;
-	    contact.lastName = firstName;
-	    oldList.remove(1);   
+	    String lastName = contact.firstName;
+	    String firstName = contact.lastName;
+	    contact.firstName = firstName;
+	    contact.lastName = lastName;
+	    oldList.remove(index);   
 	    oldList.add(contact);
 	    Collections.sort(oldList);
 	    Collections.sort(newList);
