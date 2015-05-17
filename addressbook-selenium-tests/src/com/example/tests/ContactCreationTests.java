@@ -28,6 +28,28 @@ public class ContactCreationTests extends TestBase{
     // compare states
     String lastName = contact.firstName;
     String firstName = contact.lastName;
+    String emailName;
+    String phone;
+    
+    if (contact.email1.length() == 0) {
+    	emailName = contact.email2;
+    	contact.email1 = emailName;
+		contact.email2 = "";
+	}
+    
+    if (contact.phoneHome.length() == 0) {
+    	if (contact.phoneMobile.length() == 0) {
+    		if (contact.phoneWork.length() != 0){
+    			phone = contact.phoneWork;
+    	    	contact.phoneHome = phone;
+    		}
+		}  	
+    	else {
+			phone = contact.phoneMobile;
+	    	contact.phoneHome = phone;
+		}
+	}  
+
     contact.firstName = firstName;
     contact.lastName = lastName;
     oldList.add(contact);

@@ -49,8 +49,8 @@ public class TestBase {
 			    contact.phoneHome = generateRandomString();
 			    contact.phoneMobile = generateRandomString();
 			    contact.phoneWork = generateRandomString();
-			    contact.email1 = "";
-			    contact.email2 = "";
+			    contact.email1 = generateRandomString();
+			    contact.email2 = generateRandomString();
 			    contact.birthDay = "10";
 			    contact.birthMonth = "June";
 			    contact.birthYear = "1980";

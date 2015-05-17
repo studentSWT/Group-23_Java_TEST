@@ -74,7 +74,7 @@ public class ContactHelper extends HelperBase {
 		        contact.firstName = row.findElement(By.xpath(".//td[2]")).getText();
 		        contact.lastName = row.findElement(By.xpath(".//td[3]")).getText();
 		        contact.email1 = row.findElement(By.xpath(".//td[4]")).getText();
-		        //contact.phoneHome =  row.findElement(By.xpath(".//td[5]")).getText();
+		        contact.phoneHome =  row.findElement(By.xpath(".//td[5]")).getText();
 		    	if (indexStr == -1) {
 		    	    contact.email2 = "";
 		    	} else {
