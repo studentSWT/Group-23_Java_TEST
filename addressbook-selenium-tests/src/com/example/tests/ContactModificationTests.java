@@ -5,14 +5,14 @@ import static org.testng.AssertJUnit.assertEquals;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
+import static com.example.fm.ContactHelper.MODIFICATION;
 import org.testng.annotations.Test;
 
 public class ContactModificationTests extends TestBase {
 	
 	@Test(dataProvider = "randomValidContactGenerator")
 	public void modifySomeContactEdit(ContactData contact) {
-		app.getNavigationHelper().openMainPage();
+		app.navigateTo().mainPage();
 		
 		// save old state
 		List<ContactData> oldList = app.getContactHelper().getContacts();
@@ -21,7 +21,7 @@ public class ContactModificationTests extends TestBase {
 		    
 		// actions
 		app.getContactHelper().initContactModificationViaEdit(index + 1);
-		app.getContactHelper().fillContactForm(contact);
+		app.getContactHelper().fillContactForm(contact,MODIFICATION);
 	    app.getContactHelper().submitContactModification();
 	    app.getContactHelper().gotoHomePage();
 	    
@@ -64,7 +64,7 @@ public class ContactModificationTests extends TestBase {
 	
 	@Test(dataProvider = "randomValidContactGenerator")
 	public void modifySomeContactDetails(ContactData contact) {
-		app.getNavigationHelper().openMainPage();
+		app.navigateTo().mainPage();
 		
 		// save old state
 		List<ContactData> oldList = app.getContactHelper().getContacts();
@@ -74,7 +74,7 @@ public class ContactModificationTests extends TestBase {
 		// actions
 		app.getContactHelper().initContactModificationViaDetails(index + 1);
 		app.getContactHelper().initContactModify();
-		app.getContactHelper().fillContactForm(contact);
+		app.getContactHelper().fillContactForm(contact,MODIFICATION);
 	    app.getContactHelper().submitContactModification();
 	    app.getContactHelper().gotoHomePage();
 	    

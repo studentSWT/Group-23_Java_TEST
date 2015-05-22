@@ -1,24 +1,23 @@
 package com.example.tests;
 
 import static org.testng.AssertJUnit.assertEquals;
-
 import java.util.Collections;
 import java.util.List;
-
 import org.testng.annotations.Test;
+import static com.example.fm.ContactHelper.CREATION;
 
 public class ContactCreationTests extends TestBase{
 
     @Test(dataProvider = "randomValidContactGenerator")
     public void testNonEmptyContactCreation(ContactData contact) throws Exception {
-	app.getNavigationHelper().openMainPage();
+	app.navigateTo().mainPage();
 	
 	// save old state
 	List<ContactData> oldList = app.getContactHelper().getContacts();
  
 	// actions
 	app.getContactHelper().initNewContactCreation();
-	app.getContactHelper().fillContactForm(contact);
+	app.getContactHelper().fillContactForm(contact,CREATION);
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().gotoHomePage();
    
@@ -59,7 +58,7 @@ public class ContactCreationTests extends TestBase{
 
   //@Test
   public void testEmptyContactCreation() throws Exception {
-	app.getNavigationHelper().openMainPage();
+	app.navigateTo().mainPage();
 	
 	// save old state
 		List<ContactData> oldList = app.getContactHelper().getContacts();
@@ -67,7 +66,7 @@ public class ContactCreationTests extends TestBase{
 	// actions
 	app.getContactHelper().initNewContactCreation();
     ContactData contact = new ContactData("", "", "", "", "", "", "", "", "-", "-", "-", "", "");
-	app.getContactHelper().fillContactForm(contact);
+	app.getContactHelper().fillContactForm(contact,CREATION);
     app.getContactHelper().submitContactCreation();
     app.getContactHelper().gotoHomePage();
     
