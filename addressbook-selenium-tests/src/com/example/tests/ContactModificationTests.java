@@ -2,117 +2,111 @@ package com.example.tests;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
+import static com.example.fm.ContactHelper.MODIFICATION;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import org.testng.annotations.Test;
+
+import com.example.utils.SortedListOf;
 
 public class ContactModificationTests extends TestBase {
 	
 	@Test(dataProvider = "randomValidContactGenerator")
 	public void modifySomeContactEdit(ContactData contact) {
-		app.getNavigationHelper().openMainPage();
+		app.navigateTo().mainPage();
 		
 		// save old state
-		List<ContactData> oldList = app.getContactHelper().getContacts();
+		SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
 		 Random rnd = new Random();
 		 int index = rnd.nextInt(oldList.size() - 1);
 		    
 		// actions
-		app.getContactHelper().initContactModificationViaEdit(index + 1);
-		app.getContactHelper().fillContactForm(contact);
-	    app.getContactHelper().submitContactModification();
-	    app.getContactHelper().gotoHomePage();
+		 app.getContactHelper().midifyContact(index, contact);
 	    
 		// save new state
-	    List<ContactData> newList = app.getContactHelper().getContacts(); 
+		 SortedListOf<ContactData> newList = app.getContactHelper().getContacts(); 
 	    
-	    // compare states
-	    String lastName = contact.firstName;
-	    String firstName = contact.lastName;
-	    String emailName;
-	    String phone;
+	    // compare states	    
+	    String lastName = contact.getFirstName();
+	    String firstName = contact.getLastName();
 	    
-	    if (contact.email1.length() == 0) {
-	    	emailName = contact.email2;
-	    	contact.email1 = emailName;
-			contact.email2 = "";
+	    if (contact.getEmail1().length() == 0) {
+	    	contact.withEmail1(contact.getEmail2())
+			       .withEmail2("");
 		}
 	    
-	    if (contact.phoneHome.length() == 0) {
-	    	if (contact.phoneMobile.length() == 0) {
-	    		if (contact.phoneWork.length() != 0){
-	    			phone = contact.phoneWork;
-	    	    	contact.phoneHome = phone;
+	    if (contact.getPhoneHome().length() == 0) {
+	    	if (contact.getPhoneMobile().length() == 0) {
+	    		if (contact.getPhoneWork().length() != 0){
+	    	    	contact.withPhoneHome(contact.getPhoneWork());
 	    		}
 			}  	
 	    	else {
-    			phone = contact.phoneMobile;
-    	    	contact.phoneHome = phone;
-    		}
-		} 
-	
-	    contact.firstName = firstName;
-	    contact.lastName = lastName;
-	    oldList.remove(index);   
-	    oldList.add(contact);
-	    Collections.sort(oldList);
-	    Collections.sort(newList);
-	    assertEquals(newList, oldList);
+		    	contact.withPhoneHome(contact.getPhoneMobile());
+			}
+		}  
+
+	    contact.withFirstName(firstName).withLastName(lastName);
+	    
+	    assertThat(newList, equalTo(oldList.without(index).withAdded(contact)));
+	    //oldList.remove(index);   
+	    //oldList.add(contact);
+	    //Collections.sort(oldList);
+	    //Collections.sort(newList);
+	    //assertEquals(newList, oldList);
 	}
 	
 	@Test(dataProvider = "randomValidContactGenerator")
 	public void modifySomeContactDetails(ContactData contact) {
-		app.getNavigationHelper().openMainPage();
+		app.navigateTo().mainPage();
 		
 		// save old state
-		List<ContactData> oldList = app.getContactHelper().getContacts();
+		SortedListOf<ContactData> oldList = app.getContactHelper().getContacts();
 		 Random rnd = new Random();
 		 int index = rnd.nextInt(oldList.size() - 1);
 		 
 		// actions
-		app.getContactHelper().initContactModificationViaDetails(index + 1);
-		app.getContactHelper().initContactModify();
-		app.getContactHelper().fillContactForm(contact);
-	    app.getContactHelper().submitContactModification();
-	    app.getContactHelper().gotoHomePage();
+		app.getContactHelper().initContactModificationViaDetails(index + 1)
+				.initContactModify()
+				.fillContactForm(contact, MODIFICATION)
+				.submitContactModification()
+				.gotoHomePage();
 	    
 		// save new state
-	    List<ContactData> newList = app.getContactHelper().getContacts(); 
+		SortedListOf<ContactData> newList = app.getContactHelper().getContacts(); 
 	    
 	    // compare states
-	    String lastName = contact.firstName;
-	    String firstName = contact.lastName;
-	    String emailName;
-	    String phone;
+	    String lastName = contact.getFirstName();
+	    String firstName = contact.getLastName();
 	    
-	    if (contact.email1.length() == 0) {
-	    	emailName = contact.email2;
-	    	contact.email1 = emailName;
-			contact.email2 = "";
+	    if (contact.getEmail1().length() == 0) {
+	    	contact.withEmail1(contact.getEmail2())
+			       .withEmail2("");
 		}
 	    
-	    if (contact.phoneHome.length() == 0) {
-	    	if (contact.phoneMobile.length() == 0) {
-	    		if (contact.phoneWork.length() != 0){
-	    			phone = contact.phoneWork;
-	    	    	contact.phoneHome = phone;
+	    if (contact.getPhoneHome().length() == 0) {
+	    	if (contact.getPhoneMobile().length() == 0) {
+	    		if (contact.getPhoneWork().length() != 0){
+	    	    	contact.withPhoneHome(contact.getPhoneWork());
 	    		}
 			}  	
 	    	else {
-    			phone = contact.phoneMobile;
-    	    	contact.phoneHome = phone;
-    		}
+		    	contact.withPhoneHome(contact.getPhoneMobile());
+			}
 		}  
-	
-	    contact.firstName = firstName;
-	    contact.lastName = lastName;
-	    oldList.remove(index);   
-	    oldList.add(contact);
-	    Collections.sort(oldList);
-	    Collections.sort(newList);
-	    assertEquals(newList, oldList);
+
+	    contact.withFirstName(firstName).withLastName(lastName);
+	    
+	    assertThat(newList, equalTo(oldList.without(index).withAdded(contact)));
+	    
+	    //oldList.remove(index);   
+	    //oldList.add(contact);
+	    //Collections.sort(oldList);
+	    //Collections.sort(newList);
+	    //assertEquals(newList, oldList);
 	}
 	
 }
